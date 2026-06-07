@@ -10,8 +10,8 @@ class TranscriptionError(Exception):
 class HuggingFaceTranscriptionService:
     def __init__(self):
         self.api_token = settings.HUGGINGFACE_API_TOKEN
-        # Using Whisper Large V3 which has excellent multi-lingual (Tamil/English) capability
-        self.api_url = "https://api-inference.huggingface.co/models/openai/whisper-large-v3"
+        # Using the new Hugging Face API router
+        self.api_url = "https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3"
         self.timeout = 45.0
 
     def transcribe_audio(self, local_file_path: str) -> str:
