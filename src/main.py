@@ -54,6 +54,16 @@ async def telegram_webhook(request: Request):
         logger.error(f"Error processing webhook update: {e}")
         return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@app.get("/")
+def read_root():
+    return {
+        "message": "Stateless Tamil-English Translation Bot API is running!",
+        "endpoints": {
+            "health": "/health",
+            "webhook": "/webhook (POST)"
+        }
+    }
+
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
