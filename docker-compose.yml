@@ -7,6 +7,9 @@ services:
     restart: always
     ports:
       - "8000:8000"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     environment:
       - PORT=8000
       - TELEGRAM_BOT_TOKEN=8717998365:AAH3i9-lR0IXNIQN3owvoQvZ5-kNsHn_lEg
