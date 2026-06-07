@@ -29,7 +29,7 @@ class HuggingFaceTranscriptionService:
             headers = {"Authorization": f"Bearer {self.api_token}"}
             
             logger.info("Sending request to Hugging Face Whisper API...")
-            with httpx.Client(timeout=self.timeout) as client:
+            with httpx.Client(timeout=self.timeout, trust_env=False) as client:
                 response = client.post(self.api_url, headers=headers, content=audio_data)
                 
                 # Check for model loading state (Hugging Face sometimes returns 503 while loading models)
