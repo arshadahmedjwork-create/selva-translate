@@ -26,7 +26,11 @@ class HuggingFaceTranscriptionService:
             with open(local_file_path, "rb") as f:
                 audio_data = f.read()
 
-            headers = {"Authorization": f"Bearer {self.api_token}"}
+            # Tell the HF server exactly what format the audio is in (Telegram voice is audio/ogg)
+            headers = {
+                "Authorization": f"Bearer {self.api_token}",
+                "Content-Type": "audio/ogg"
+            }
             
             logger.info("Sending request to Hugging Face Whisper API...")
             response = requests.post(self.api_url, headers=headers, data=audio_data, timeout=self.timeout)
@@ -37,6 +41,10 @@ class HuggingFaceTranscriptionService:
                 import time
                 time.sleep(5)
                 response = requests.post(self.api_url, headers=headers, data=audio_data, timeout=self.timeout)
+
+            # Log detailed error info if the request failed
+            if response.status_code != 200:
+                logger.error(f"Hugging Face API error response: {response.status_code} - {response.text}")
 
             response.raise_for_status()
             result = response.json()
